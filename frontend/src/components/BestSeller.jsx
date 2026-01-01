@@ -3,27 +3,26 @@ import { ShopContext } from "../context/shopContext";
 import Title from "./Title";
 import ProductItem from "./ProductItem";
 
-function LatestCollection() {
+function BestSeller() {
   const { products } = useContext(ShopContext);
-  const [latestProducts, setLatestProducts] = useState([]);
+  const [bestSeller, setBestSeller] = useState([]);
 
   useEffect(() => {
-    setLatestProducts(products.slice(0, 10)); //Only 10 products
+    const bestProduct = products.filter((item) => item.bestseller);
+    setBestSeller(bestProduct.slice(0, 5));
   }, [products]);
 
   return (
     <div className="my-10">
-      <div className="text-center py-8 text-3xl">
-        <Title text1={"LATEST"} text2={"COLLECTIONS"} />
+      <div className="text-center text-3xl py-8">
+        <Title text1={"BEST"} text2={"SELLERS"} />
         <p className="w-3/4 m-auto text-sm sm:text-sm md:text-base text-gray-600">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur,
-          incidunt!
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus,
+          velit.
         </p>
       </div>
-
-      {/* Rendering Products */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 pgap-4 gap-y-6 ">
-        {latestProducts.map((item, ) => (
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6">
+        {bestSeller.map((item) => (
           <ProductItem
             key={item._id}
             id={item._id}
@@ -36,5 +35,4 @@ function LatestCollection() {
     </div>
   );
 }
-
-export default LatestCollection;
+export default BestSeller;
