@@ -20,6 +20,10 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+//routes
+app.use("/api/user", require("./routes/userRoute"));
+
+//listening to port
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
