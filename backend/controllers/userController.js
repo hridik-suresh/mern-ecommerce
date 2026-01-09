@@ -14,7 +14,35 @@ const createToken = (id) => {
 //@desc   Login user
 //@route  POST /api/user/login
 //@access Public
-const loginUser = asyncHandler(async (req, res) => {});
+const loginUser = asyncHandler(async (req, res) => {
+  const {email, password} = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return res
+      .status(400)
+      .json({ message: "Invalid email or password", success: false });
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+
+  if (!isMatch) {
+    return res
+      .status(400)
+      .json({ message: "Invalid email or password", success: false });
+  }
+
+  const token = createToken(user._id);
+
+  res.status(200).json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    token: token,
+    success: true,
+  });
+});
 
 //@desc   Register user
 //@route  POST /api/user/register
