@@ -3,7 +3,6 @@ require("dotenv").config();
 const cors = require("cors");
 const connectDB = require("./config/mongodb");
 const connectCloudinary = require("./config/cloudinary");
-require("dotenv").config();
 
 //App config
 const app = express();
