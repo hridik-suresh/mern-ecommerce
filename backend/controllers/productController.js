@@ -7,7 +7,7 @@ const Product = require("../models/Product");
 const addProduct = asyncHandler(async (req, res) => {});
 
 // @desc    Get all products--------------------------------------------------------
-// @route   GET /api/product?page=&limit=
+// @route   GET /api/product/
 // @access  Public
 const listProducts = asyncHandler(async (req, res) => {});
 
