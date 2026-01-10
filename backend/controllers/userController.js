@@ -4,8 +4,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-
-
 //Function to create JWT token
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
@@ -15,7 +13,7 @@ const createToken = (id) => {
 //@route  POST /api/user/login
 //@access Public
 const loginUser = asyncHandler(async (req, res) => {
-  const {email, password} = req.body;
+  const { email, password } = req.body;
 
   const user = await User.findOne({ email });
 
@@ -66,12 +64,10 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   if (password.length < 8) {
-    return res
-      .status(400)
-      .json({
-        message: "Password must be at least 8 characters long",
-        success: false,
-      });
+    return res.status(400).json({
+      message: "Password must be at least 8 characters long",
+      success: false,
+    });
   }
 
   //hashing user password
@@ -103,7 +99,26 @@ const registerUser = asyncHandler(async (req, res) => {
 //@desc   Login user as admin-------------------------------------------------------------
 //@route  POST /api/user/admin
 //@access Public
-const adminLogin = asyncHandler(async (req, res) => {});
+const adminLogin = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  if (
+    email === process.env.ADMIN_EMAIL &&
+    password === process.env.ADMIN_PASSWORD
+  ) {
+    const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+    res.status(200).json({
+      email: email,
+      token: token,
+      success: true,
+    });
+  } else {
+    res
+      .status(401)
+      .json({ message: "Invalid admin credentials", success: false });
+  }
+});
 
 module.exports = {
   loginUser,
