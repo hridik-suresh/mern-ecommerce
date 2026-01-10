@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 
 //routes
 app.use("/api/user", require("./routes/userRoute"));
-app.use("/api/products", require("./routes/productRoute"));
+app.use("/api/product", require("./routes/productRoute"));
 
 //listening to port
 app.listen(port, () => {
