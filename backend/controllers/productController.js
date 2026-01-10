@@ -59,7 +59,18 @@ const listProducts = asyncHandler(async (req, res) => {
 // @desc    Remove a product--------------------------------------------------------
 // @route   DELETE /api/product/:id
 // @access  Private/Admin
-const removeProduct = asyncHandler(async (req, res) => {});
+const removeProduct = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  if (product) {
+    await Product.findByIdAndDelete(req.params.id);
+    res
+      .status(200)
+      .json({ success: true, message: "Product removed successfully" });
+  } else {
+    res.status(404);
+    throw new Error("Product not found");
+  }
+});
 
 // @desc    Get product details--------------------------------------------------------
 // @route   GET /api/product/:id
