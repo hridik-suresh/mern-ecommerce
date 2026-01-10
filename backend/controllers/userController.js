@@ -98,16 +98,14 @@ const registerUser = asyncHandler(async (req, res) => {
 
 //@desc   Login user as admin-------------------------------------------------------------
 //@route  POST /api/user/admin
-//@access Public
+//@access Admin only
 const adminLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   if (
     email === process.env.ADMIN_EMAIL &&
     password === process.env.ADMIN_PASSWORD
   ) {
-    const token = jwt.sign({ email }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(email + password, process.env.JWT_SECRET);
     res.status(200).json({
       email: email,
       token: token,
