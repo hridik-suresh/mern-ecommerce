@@ -20,23 +20,34 @@ const addProduct = asyncHandler(async (req, res) => {
 
   const imagesUrl = await Promise.all(
     images.map(async (image) => {
-      let result = await cloudinary.uploader.upload(image.path, {resource_type: "image"});
+      let result = await cloudinary.uploader.upload(image.path, {
+        resource_type: "image",
+      });
       return result.secure_url;
     })
   );
 
-  console.log(
+  const productData = {
     name,
     description,
-    price,
+    price: Number(price),
     category,
     subCategory,
-    sizes,
-    bestSeller
-  );
-  console.log(imagesUrl);
+    bestSeller: bestSeller === "true" ? true : false,
+    sizes: JSON.parse(sizes),
+    image: imagesUrl,
+    date: Date.now(),
+  };
 
-  res.json({ message: "Product added successfully" });
+  const product = new Product(productData);
+  const createdProduct = await product.save();
+  res
+    .status(201)
+    .json({
+      success: true,
+      message: "Product added successfully",
+      product: createdProduct,
+    });
 });
 
 // @desc    Get all products--------------------------------------------------------
