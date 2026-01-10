@@ -75,7 +75,15 @@ const removeProduct = asyncHandler(async (req, res) => {
 // @desc    Get product details--------------------------------------------------------
 // @route   GET /api/product/:id
 // @access  Public
-const singleProduct = asyncHandler(async (req, res) => {});
+const singleProduct = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  if (product) {
+    res.status(200).json({ success: true, product });
+  } else {
+    res.status(404);
+    throw new Error("Product not found");
+  }
+});
 
 module.exports = {
   addProduct,
