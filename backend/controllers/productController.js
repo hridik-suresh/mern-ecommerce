@@ -41,19 +41,20 @@ const addProduct = asyncHandler(async (req, res) => {
 
   const product = new Product(productData);
   const createdProduct = await product.save();
-  res
-    .status(201)
-    .json({
-      success: true,
-      message: "Product added successfully",
-      product: createdProduct,
-    });
+  res.status(201).json({
+    success: true,
+    message: "Product added successfully",
+    product: createdProduct,
+  });
 });
 
 // @desc    Get all products--------------------------------------------------------
 // @route   GET /api/product/
 // @access  Public
-const listProducts = asyncHandler(async (req, res) => {});
+const listProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({});
+  res.status(200).json({ success: true, products });
+});
 
 // @desc    Remove a product--------------------------------------------------------
 // @route   DELETE /api/product/:id
