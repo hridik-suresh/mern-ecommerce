@@ -1,10 +1,11 @@
+import NavBar from "./components/NavBar";
 
 const App = () => {
   return (
-    <div>
-      <h1 class="text-3xl text-purple-600 font-bold underline">Hello world!</h1>
-    </div>
+    <>
+      <NavBar />
+    </>
   );
-}
+};
 
-export default App
+export default App;
