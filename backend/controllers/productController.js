@@ -49,7 +49,7 @@ const addProduct = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get all products--------------------------------------------------------
-// @route   GET /api/product/
+// @route   GET /api/product
 // @access  Public
 const listProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({});
