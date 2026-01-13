@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const List = () => {
+const List = ({ token }) => {
   const [list, setList] = useState([]);
 
   const fetchList = async () => {
@@ -13,6 +13,25 @@ const List = () => {
 
       if (response.data.success) {
         setList(response.data.products);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+    }
+  };
+
+  const removeProduct = async (id) => {
+    try {
+      const response = await axios.delete(
+        import.meta.env.VITE_BACKEND_URL + "/api/product/" + id,
+        { headers: { token } }
+      );
+
+      if (response.data.success) {
+        toast.success(response.data.message);
+        fetchList();
       } else {
         toast.error(response.data.message);
       }
@@ -54,7 +73,10 @@ const List = () => {
             <p>{item.name}</p>
             <p>{item.category}</p>
             <p>{"$" + item.price}</p>
-            <button className="text-red-500 hover:text-red-700 text-right md:text-center cursor-pointer">
+            <button
+              onClick={() => removeProduct(item._id)}
+              className="text-red-500 hover:text-red-700 text-right md:text-center cursor-pointer"
+            >
               Delete
             </button>
           </div>
