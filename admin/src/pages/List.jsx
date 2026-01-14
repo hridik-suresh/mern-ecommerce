@@ -31,7 +31,7 @@ const List = ({ token }) => {
 
       if (response.data.success) {
         toast.success(response.data.message);
-        fetchList();
+        await fetchList();
       } else {
         toast.error(response.data.message);
       }

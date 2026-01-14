@@ -32,6 +32,7 @@ const Add = ({ token }) => {
       formData.append("bestseller", bestseller);
       formData.append("sizes", JSON.stringify(sizes));
       formData.append("price", price);
+      console.log([...formData]);
 
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/product/add",

@@ -6,7 +6,7 @@ const Product = require("../models/Product");
 // @route   POST /api/product/add
 // @access  Private/Admin
 const addProduct = asyncHandler(async (req, res) => {
-  const { name, description, price, category, subCategory, sizes, bestSeller } =
+  const { name, description, price, category, subCategory, sizes, bestseller } =
     req.body;
 
   const image1 = req.files.image1 && req.files.image1[0];
@@ -33,7 +33,7 @@ const addProduct = asyncHandler(async (req, res) => {
     price: Number(price),
     category,
     subCategory,
-    bestSeller: bestSeller === "true" ? true : false,
+    bestseller: bestseller === "true" ? true : false,
     sizes: JSON.parse(sizes),
     image: imagesUrl,
     date: Date.now(),
