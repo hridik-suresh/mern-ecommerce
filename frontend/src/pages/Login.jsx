@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ShopContext } from "../context/shopContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const Login = () => {
   const [currentState, setCurrentState] = useState("Sign Up");
@@ -45,6 +46,12 @@ const Login = () => {
       toast.error(err.message);
     }
   };
+
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
 
   return (
     <form
