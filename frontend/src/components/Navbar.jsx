@@ -72,7 +72,12 @@ const Navbar = () => {
                 <p className="text-left cursor-pointer hover:text-black transition-colors">
                   My Profile
                 </p>
-                <p className="text-left cursor-pointer hover:text-black transition-colors">
+                <p
+                  onClick={() => {
+                    navigate("/orders");
+                  }}
+                  className="text-left cursor-pointer hover:text-black transition-colors"
+                >
                   My Orders
                 </p>
                 <p
