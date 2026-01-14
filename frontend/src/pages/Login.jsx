@@ -53,6 +53,12 @@ const Login = () => {
     }
   }, [token]);
 
+  useEffect(() => {
+    if (!token && localStorage.getItem("userToken")) {
+      setToken(localStorage.getItem("userToken"));
+    }
+  }, []);
+
   return (
     <form
       onSubmit={onSubmitHandler}
