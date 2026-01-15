@@ -48,14 +48,6 @@ const loginUser = asyncHandler(async (req, res) => {
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
-  //checking user already exist
-  const userExist = await User.findOne({ email });
-  if (userExist) {
-    return res
-      .status(400)
-      .json({ message: "User already exists", success: false });
-  }
-
   //validating email format and strong password
   if (!validator.isEmail(email)) {
     return res
@@ -68,6 +60,14 @@ const registerUser = asyncHandler(async (req, res) => {
       message: "Password must be at least 8 characters long",
       success: false,
     });
+  }
+
+  //checking user already exist
+  const userExist = await User.findOne({ email });
+  if (userExist) {
+    return res
+      .status(400)
+      .json({ message: "User already exists", success: false });
   }
 
   //hashing user password
