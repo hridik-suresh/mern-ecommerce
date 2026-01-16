@@ -49,6 +49,18 @@ const updateCart = asyncHandler(async (req, res) => {
 });
 
 //get user Cart data
-const getUserCart = asyncHandler(async (req, res) => {});
+const getUserCart = asyncHandler(async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    const userData = await User.findById(userId);
+    let cartData = await userData.cartData;
+
+    res.json({ success: true, cartData });
+  } catch (error) {
+    console.log(err);
+    res.json({ success: false, message: err.message });
+  }
+});
 
 module.export = { addToCart, updateCart, getUserCart };
