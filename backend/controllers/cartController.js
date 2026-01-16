@@ -1,7 +1,33 @@
 const asyncHandler = require("express-async-handler");
+const User = require("../models/User");
 
 //add  product to user Cart
-const addToCart = asyncHandler(async (req, res) => {});
+const addToCart = asyncHandler(async (req, res) => {
+  try {
+    const { userId, itemId, size } = req.body;
+
+    const userData = await User.findById(userId);
+    let cartData = await userData.cartData;
+
+    if (cartData[itemId]) {
+      if (cartData[itemId][size]) {
+        cartData[itemId][size] += 1;
+      } else {
+        cartData[itemId][size] = 1;
+      }
+    } else {
+      cartData[itemId] = {};
+      cartData[itemId][size] = 1;
+    }
+
+    await User.findByIdAndUpdate(userId, { cartData });
+
+    res.json({ success: true, message: "Add to Cart" });
+  } catch (err) {
+    console.log(err);
+    res.json({ success: false, message: err.message });
+  }
+});
 
 //update user Cart
 const updateCart = asyncHandler(async (req, res) => {});

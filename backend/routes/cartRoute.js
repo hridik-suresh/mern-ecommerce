@@ -4,11 +4,12 @@ const {
   updateCart,
   getUserCart,
 } = require("../controllers/cartController");
+const authUser = require("../middleware/auth");
 
 const router = express.Router();
 
-router.get("/get", getUserCart);
-router.post("/add", addToCart);
-router.post("/update", updateCart);
+router.get("/get", authUser, getUserCart);
+router.post("/add", authUser, addToCart);
+router.post("/update", authUser, updateCart);
 
 module.exports = router;
