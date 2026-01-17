@@ -7,7 +7,7 @@ const addToCart = asyncHandler(async (req, res) => {
     const { userId, itemId, size } = req.body;
 
     const userData = await User.findById(userId);
-    let cartData = await userData.cartData;
+    let cartData = userData.cartData;
 
     if (cartData[itemId]) {
       if (cartData[itemId][size]) {
@@ -35,7 +35,7 @@ const updateCart = asyncHandler(async (req, res) => {
     const { userId, itemId, size, quantity } = req.body;
 
     const userData = await User.findById(userId);
-    let cartData = await userData.cartData;
+    let cartData = userData.cartData;
 
     cartData[itemId][size] = quantity;
 
@@ -54,12 +54,12 @@ const getUserCart = asyncHandler(async (req, res) => {
     const { userId } = req.body;
 
     const userData = await User.findById(userId);
-    let cartData = await userData.cartData;
+    let cartData = userData.cartData;
 
     res.json({ success: true, cartData });
   } catch (error) {
-    console.log(err);
-    res.json({ success: false, message: err.message });
+    console.log(error);
+    res.json({ success: false, message: error.message });
   }
 });
 

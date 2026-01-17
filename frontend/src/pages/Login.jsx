@@ -25,7 +25,7 @@ const Login = () => {
 
         if (response.data.success) {
           setToken(response.data.token);
-          localStorage.setItem("userToken", response.data.token);
+          localStorage.setItem("token", response.data.token);
         } else {
           toast.error(response.data.message);
         }
@@ -36,7 +36,7 @@ const Login = () => {
         });
         if (response.data.success) {
           setToken(response.data.token);
-          localStorage.setItem("userToken", response.data.token);
+          localStorage.setItem("token", response.data.token);
         } else {
           toast.error(response.data.message);
         }
@@ -54,8 +54,8 @@ const Login = () => {
   }, [token]);
 
   useEffect(() => {
-    if (!token && localStorage.getItem("userToken")) {
-      setToken(localStorage.getItem("userToken"));
+    if (!token && localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"));
     }
   }, []);
 
@@ -101,7 +101,7 @@ const Login = () => {
         <p className="cursor-pointer">Forgot your password?</p>
         {currentState === "Login" ? (
           <p
-            onClick={() => setCurrentState("Sigh Up")}
+            onClick={() => setCurrentState("Sign Up")}
             className="cursor-pointer"
           >
             Create account
