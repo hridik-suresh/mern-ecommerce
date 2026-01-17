@@ -63,4 +63,4 @@ const getUserCart = asyncHandler(async (req, res) => {
   }
 });
 
-module.export = { addToCart, updateCart, getUserCart };
+module.exports = { addToCart, updateCart, getUserCart };
