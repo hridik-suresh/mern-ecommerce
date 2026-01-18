@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 app.use("/api/user", require("./routes/userRoute"));
 app.use("/api/product", require("./routes/productRoute"));
 app.use("/api/cart", require("./routes/cartRoute"));
+app.use("/api/order", require("./routes/orderRoute"));
 
 //listening to port
 app.listen(port, () => {
