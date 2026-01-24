@@ -27,6 +27,24 @@ const Orders = ({ token }) => {
     }
   };
 
+  const statusHandler = async (evt, orderId) => {
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/order/status",
+        { orderId, status: evt.target.value },
+        { headers: { token } },
+      );
+      if (response.data.success) {
+        fetchAllOrders();
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to update order status");
+    }
+  };
+
   useEffect(() => {
     fetchAllOrders();
   }, [token]);
@@ -88,6 +106,7 @@ const Orders = ({ token }) => {
                     $ {order.amount}
                   </div>
                   <select
+                    onChange={(evt) => statusHandler(evt, order._id)}
                     value={order.status}
                     className="mt-2 sm:mt-0 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
