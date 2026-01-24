@@ -87,7 +87,10 @@ const Orders = ({ token }) => {
                   <div className="text-lg font-semibold text-gray-800">
                     $ {order.amount}
                   </div>
-                  <select className="mt-2 sm:mt-0 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <select
+                    value={order.status}
+                    className="mt-2 sm:mt-0 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
                     <option value="Order Placed">Order Placed</option>
                     <option value="Packing">Packing</option>
                     <option value="Shipped">Shipped</option>
