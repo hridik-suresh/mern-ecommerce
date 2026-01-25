@@ -3,7 +3,7 @@ const User = require("../models/User");
 const Stripe = require("stripe");
 
 //global variables
-const currency = "inr";
+const currency = "usd";
 const deliveryCharges = 10;
 
 //gateway initialization
@@ -70,7 +70,7 @@ const placeOrderStripe = async (req, res) => {
       price_data: {
         currency: currency,
         product_data: {
-          name: 'Delivery Charges',
+          name: "Delivery Charges",
         },
         unit_amount: deliveryCharges * 100,
       },
