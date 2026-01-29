@@ -156,6 +156,24 @@ const placeOrderRazorpay = async (req, res) => {
   }
 };
 
+const verifyRazorpay = async (req, res) => {
+  try {
+    const { userId, razorpay_order_id } = req.body;
+
+    const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
+    if(orderInfo.status === "paid") {
+      await Order.findByIdAndUpdate(orderInfo.receipt, { payment: true });
+      await User.findByIdAndUpdate(userId, { cartData: {} });
+      res.json({ success: true, message: "Payment successful" });
+    }else {
+      res.json({ success: false, message: "Payment failed" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
 //All orders data for admin panel
 const allOrders = async (req, res) => {
   try {
@@ -199,4 +217,5 @@ module.exports = {
   userOrders,
   updateStatus,
   verifyStripe,
+  verifyRazorpay,
 };

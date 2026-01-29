@@ -7,6 +7,7 @@ const {
   userOrders,
   updateStatus,
   verifyStripe,
+  verifyRazorpay,
 } = require("../controllers/orderController");
 const adminAuth = require("../middleware/adminAuth");
 const authUser = require("../middleware/auth");
@@ -27,5 +28,6 @@ router.post("/userorders", authUser, userOrders);
 
 //verify payment
 router.post("/verifyStripe", authUser, verifyStripe);
+router.post("/verifyRazorpay", authUser, verifyRazorpay);
 
 module.exports = router;
