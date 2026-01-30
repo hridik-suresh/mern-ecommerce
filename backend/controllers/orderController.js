@@ -161,11 +161,13 @@ const verifyRazorpay = async (req, res) => {
     const { userId, razorpay_order_id } = req.body;
 
     const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
-    if(orderInfo.status === "paid") {
+    if (orderInfo.status === "paid") {
       await Order.findByIdAndUpdate(orderInfo.receipt, { payment: true });
       await User.findByIdAndUpdate(userId, { cartData: {} });
       res.json({ success: true, message: "Payment successful" });
-    }else {
+    } else {
+      // DELETE the order if payment failed/cancelled
+      await Order.findByIdAndDelete(orderInfo.receipt);
       res.json({ success: false, message: "Payment failed" });
     }
   } catch (error) {
@@ -177,7 +179,10 @@ const verifyRazorpay = async (req, res) => {
 //All orders data for admin panel
 const allOrders = async (req, res) => {
   try {
-    const orders = await Order.find({});
+    // Logic: Find orders that are either COD OR have payment: true
+    const orders = await Order.find({
+      $or: [{ paymentMethod: "COD" }, { payment: true }],
+    });
     res.json({ success: true, orders });
   } catch (error) {
     console.log(error);
@@ -189,7 +194,10 @@ const allOrders = async (req, res) => {
 const userOrders = async (req, res) => {
   try {
     const { userId } = req.body;
-    const orders = await Order.find({ userId });
+    const orders = await Order.find({
+      userId,
+      $or: [{ paymentMethod: "COD" }, { payment: true }],
+    });
     res.json({ success: true, orders });
   } catch (error) {
     console.log(error);
